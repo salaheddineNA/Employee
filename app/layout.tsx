@@ -9,8 +9,8 @@ import { Toaster } from "react-hot-toast"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Employee Dashboard",
-  description: "Modern employee management dashboard",
+  title: "Employee",
+  description: "employee ",
 }
 
 export default function RootLayout({

@@ -19,12 +19,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { SidebarTrigger } from "@/components/ui/sidebar"
-import { ArrowLeft, LoaderPinwheel, Plus } from "lucide-react"
+import { LoaderPinwheel, Plus } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import toast from "react-hot-toast"
-
 
 export default function NewEmployeePage() {
   const router = useRouter()
@@ -54,7 +52,7 @@ export default function NewEmployeePage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-  
+
     try {
       const response = await fetch("/api/employees", {
         method: "POST",
@@ -63,12 +61,12 @@ export default function NewEmployeePage() {
         },
         body: JSON.stringify(formData),
       })
-  
+
       if (!response.ok) {
         const errorData = await response.json()
         throw new Error(errorData.message || "Failed to create employee")
       }
-  
+
       toast.success("Employee created successfully!")
       router.push("/employees")
     } catch (err: any) {
@@ -79,35 +77,15 @@ export default function NewEmployeePage() {
   }
 
   return (
-    <div className="flex flex-col">
-      <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-        <SidebarTrigger className="-ml-1" />
-        <div className="flex flex-1 items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="sm" asChild>
-              <Link href="/employees">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Employees
-              </Link>
-            </Button>
-            <div>
-              <h1 className="text-lg font-semibold">Add New Employee</h1>
-              <p className="text-sm text-muted-foreground">
-                Create a new employee record
-              </p>
-            </div>
-          </div>
-        </div>
-      </header>
-
+    <div className="flex flex-col min-h-screen">
       <div className="flex-1 p-6">
-        <div className="max-w-2xl mx-auto">
+        <div>
           {error && (
             <div className="mb-4 rounded bg-red-100 p-3 text-red-700">{error}</div>
           )}
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Personal Information */}
-            <Card>
+            <Card className="w-[100%] mx-auto border border-orange-500 bg-orange-50 shadow-md">
               <CardHeader>
                 <CardTitle>Personal Information</CardTitle>
                 <CardDescription>Basic employee details</CardDescription>
@@ -118,6 +96,7 @@ export default function NewEmployeePage() {
                     <Label htmlFor="firstName">First Name</Label>
                     <Input
                       id="firstName"
+                      className="w-full"
                       value={formData.firstName}
                       onChange={(e) => handleInputChange("firstName", e.target.value)}
                       required
@@ -127,6 +106,7 @@ export default function NewEmployeePage() {
                     <Label htmlFor="lastName">Last Name</Label>
                     <Input
                       id="lastName"
+                      className="w-full"
                       value={formData.lastName}
                       onChange={(e) => handleInputChange("lastName", e.target.value)}
                       required
@@ -138,6 +118,7 @@ export default function NewEmployeePage() {
                   <Input
                     id="email"
                     type="email"
+                    className="w-full"
                     value={formData.email}
                     onChange={(e) => handleInputChange("email", e.target.value)}
                     required
@@ -147,6 +128,7 @@ export default function NewEmployeePage() {
                   <Label htmlFor="phoneNumber">Phone Number</Label>
                   <Input
                     id="phoneNumber"
+                    className="w-full"
                     value={formData.phoneNumber}
                     onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
                     placeholder="Optional"
@@ -156,6 +138,7 @@ export default function NewEmployeePage() {
                   <Label htmlFor="idCardNumber">ID Card Number</Label>
                   <Input
                     id="idCardNumber"
+                    className="w-full"
                     value={formData.idCardNumber}
                     onChange={(e) => handleInputChange("idCardNumber", e.target.value)}
                     required
@@ -165,7 +148,7 @@ export default function NewEmployeePage() {
             </Card>
 
             {/* Employment Information */}
-            <Card>
+            <Card className="w-[100%] mx-auto border border-orange-500 bg-orange-50 shadow-md">
               <CardHeader>
                 <CardTitle>Employment Information</CardTitle>
                 <CardDescription>Job-related details</CardDescription>
@@ -175,6 +158,7 @@ export default function NewEmployeePage() {
                   <Label htmlFor="position">Position</Label>
                   <Input
                     id="position"
+                    className="w-full"
                     value={formData.position}
                     onChange={(e) => handleInputChange("position", e.target.value)}
                     required
@@ -186,7 +170,7 @@ export default function NewEmployeePage() {
                     value={formData.department}
                     onValueChange={(value) => handleInputChange("department", value)}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select department" />
                     </SelectTrigger>
                     <SelectContent>
@@ -206,6 +190,7 @@ export default function NewEmployeePage() {
                   <Input
                     id="salary"
                     type="number"
+                    className="w-full"
                     value={formData.salary}
                     onChange={(e) => handleInputChange("salary", e.target.value)}
                     required
@@ -217,7 +202,7 @@ export default function NewEmployeePage() {
                     value={formData.status}
                     onValueChange={(value) => handleInputChange("status", value)}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="w-full">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -231,7 +216,7 @@ export default function NewEmployeePage() {
             </Card>
 
             {/* Additional Information */}
-            <Card>
+            <Card className="w-[100%] mx-auto border border-orange-500 bg-orange-50 shadow-md">
               <CardHeader>
                 <CardTitle>Additional Information</CardTitle>
                 <CardDescription>Notes and comments</CardDescription>
@@ -241,6 +226,7 @@ export default function NewEmployeePage() {
                   <Label htmlFor="notes">Notes</Label>
                   <Textarea
                     id="notes"
+                    className="w-full"
                     value={formData.notes}
                     onChange={(e) => handleInputChange("notes", e.target.value)}
                     placeholder="Internal notes about the employee..."
@@ -251,13 +237,22 @@ export default function NewEmployeePage() {
             </Card>
 
             {/* Form Actions */}
-            <div className="flex justify-end space-x-4">
-              <Button type="button" variant="outline" asChild>
+            <div className="flex justify-end space-x-4 w-[80%] mx-auto">
+              <Button
+                type="button"
+                variant="outline"
+                asChild
+                className="border-orange-500 text-orange-500 hover:bg-orange-50"
+              >
                 <Link href="/employees">Cancel</Link>
               </Button>
-              <Button type="submit" disabled={isLoading}>
+              <Button
+                type="submit"
+                disabled={isLoading}
+                className="bg-orange-500 hover:bg-orange-600 text-white"
+              >
                 {isLoading ? (
-                  <><LoaderPinwheel className="text-white animate-spin " /></>
+                  <LoaderPinwheel className="text-white animate-spin" />
                 ) : (
                   <>
                     <Plus className="mr-2 h-4 w-4" />

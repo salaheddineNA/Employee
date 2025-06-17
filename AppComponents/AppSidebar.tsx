@@ -1,6 +1,6 @@
 "use client"
 
-import { Users, UserPlus, BarChart3, Settings, Home } from "lucide-react"
+import { Users, UserPlus, Home } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -9,7 +9,6 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -32,16 +31,6 @@ const items = [
     url: "/employees/add",
     icon: UserPlus,
   },
-  {
-    title: "Analytics",
-    url: "/analytics",
-    icon: BarChart3,
-  },
-  {
-    title: "Settings",
-    url: "/settings",
-    icon: Settings,
-  },
 ]
 
 export function AppSidebar() {
@@ -51,30 +40,34 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarHeader>
         <div className="flex items-center gap-2 px-4 py-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <Users className="h-4 w-4" />
-          </div>
-          <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-semibold">HR Dashboard</span>
-            <span className="truncate text-xs text-muted-foreground">Employee Management</span>
+          <div className="grid flex-1 text-center">
+            <span className="truncate text-lg font-bold text-orange-600">Employee</span>
           </div>
         </div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={pathname === item.url}>
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+            <SidebarMenu className="flex flex-col items-center">
+              {items.map((item) => {
+                const isActive = pathname === item.url
+                return (
+                  <SidebarMenuItem key={item.title} className="w-full">
+                    <SidebarMenuButton
+                      asChild
+                      isActive={isActive}
+                      className={`flex items-center justify-center space-x-2 px-4 py-2 rounded-md cursor-pointer w-full
+                        ${isActive ? "bg-orange-100 text-orange-600 font-semibold" : "text-gray-700"}
+                        hover:bg-orange-50 hover:text-orange-500`}
+                    >
+                      <Link href={item.url} className="flex items-center space-x-2">
+                        <item.icon className={isActive ? "text-orange-600" : "text-gray-500"} />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
