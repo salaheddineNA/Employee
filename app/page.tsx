@@ -73,7 +73,6 @@ export default async function Dashboard() {
                   <div className="flex items-center space-x-4">
                     <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
                       {employee.firstName[0]}
-                      {employee.lastName[0]}
                     </div>
                     <div>
                       <p className="font-semibold text-gray-900">
@@ -86,7 +85,8 @@ export default async function Dashboard() {
                     <Badge className="bg-orange-100 text-orange-800 border-orange-200">
                       {employee.department || "N/A"}
                     </Badge>
-                    <Badge variant="outline">{employee.status}</Badge>
+                    <Badge className="bg-green-100 text-green-800 border-green-200" variant="outline">{employee.position}</Badge>
+                    <Badge className="bg-blue-100 text-blue-800 border-blue-200" variant="outline">{employee.status}</Badge>
                   </div>
                 </div>
               ))}

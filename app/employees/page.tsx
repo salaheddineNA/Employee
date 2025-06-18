@@ -84,7 +84,7 @@ export default function EmployeesPage() {
                       ) : (
                         <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center text-white font-semibold text-lg">
                           {employee.firstName[0]}
-                          {employee.lastName[0]}
+                         
                         </div>
                       )}
                       <div>

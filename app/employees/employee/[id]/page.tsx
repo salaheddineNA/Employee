@@ -2,16 +2,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar"
-import { ArrowLeft, Edit, Mail, Phone, Calendar, DollarSign, Building, User, CreditCard } from "lucide-react"
+import { ArrowLeft, Edit, Mail, Phone, Calendar, DollarSign, Building, User, CreditCard, Circle } from "lucide-react"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { prisma } from "@/lib/db"
 
-// Helper functions (same as yours)
 const getStatusColor = (status: string) => {
     switch (status) {
         case "active":
-            return "bg-green-100 text-green-800"
+            return "bg-orange-100 text-orange-800 border-orange-200"
         case "inactive":
             return "bg-yellow-100 text-yellow-800"
         case "terminated":
@@ -29,7 +28,6 @@ const formatDate = (date: Date) => {
     })
 }
 
-//async because we fetch data server-side
 export default async function EmployeeDetailsPage({ params }: { params: { id: string } }) {
     const employee = await prisma.employee.findUnique({
         where: { id: Number(params.id) },
@@ -41,32 +39,6 @@ export default async function EmployeeDetailsPage({ params }: { params: { id: st
 
     return (
         <div className="flex flex-col">
-            <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-                <SidebarTrigger className="-ml-1" />
-                <div className="flex flex-1 items-center justify-between">
-                    <div className="flex items-center gap-4">
-                        <Button variant="ghost" size="sm" asChild>
-                            <Link href="/employees">
-                                <ArrowLeft className="mr-2 h-4 w-4" />
-                                Back to Employees
-                            </Link>
-                        </Button>
-                        <div>
-                            <h1 className="text-lg font-semibold">
-                                {employee.firstName} {employee.lastName}
-                            </h1>
-                            <p className="text-sm text-muted-foreground">{employee.position}</p>
-                        </div>
-                    </div>
-                    <Button asChild>
-                        <Link href={`/employees/employee/${employee.id}/edit`}>
-                            <Edit className="mr-2 h-4 w-4" />
-                            Edit Employee
-                        </Link>
-                    </Button>
-                </div>
-            </header>
-
             <div className="flex-1 p-6">
                 <div className="max-w-4xl mx-auto space-y-6">
                     {/* Profile Header */}
@@ -80,9 +52,8 @@ export default async function EmployeeDetailsPage({ params }: { params: { id: st
                                         className="w-20 h-20 rounded-full object-cover"
                                     />
                                 ) : (
-                                    <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-2xl">
+                                    <div className="w-20 h-20 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-white font-bold text-2xl">
                                         {employee.firstName[0]}
-                                        {employee.lastName[0]}
                                     </div>
                                 )}
                                 <div className="flex-1">
@@ -90,14 +61,16 @@ export default async function EmployeeDetailsPage({ params }: { params: { id: st
                                         <h2 className="text-2xl font-bold">
                                             {employee.firstName} {employee.lastName}
                                         </h2>
-                                        <Badge className={getStatusColor(employee.status)}>{employee.status}</Badge>
+                                        <Badge className={getStatusColor(employee.status) + " flex items-center gap-1"}>
+                                            <Circle className="h-3 w-3 fill-orange-500 text-orange-500" />
+                                            {employee.status}
+                                        </Badge>
                                     </div>
                                     <p className="text-lg text-muted-foreground mb-1">{employee.position}</p>
                                     <p className="text-sm text-muted-foreground">{employee.department} Department</p>
                                 </div>
                             </div>
                         </CardHeader>
-
                     </Card>
 
                     <div className="grid gap-6 md:grid-cols-2">
@@ -105,27 +78,27 @@ export default async function EmployeeDetailsPage({ params }: { params: { id: st
                         <Card>
                             <CardHeader>
                                 <CardTitle className="flex items-center gap-2">
-                                    <User className="h-5 w-5" />
+                                    <User className="h-5 w-5 text-orange-600" />
                                     Contact Information
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 <div className="flex items-center gap-3">
-                                    <Mail className="h-4 w-4 text-muted-foreground" />
+                                    <Mail className="h-4 w-4 text-orange-600" />
                                     <div>
                                         <p className="text-sm text-muted-foreground">Email</p>
                                         <p className="font-medium">{employee.email}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <Phone className="h-4 w-4 text-muted-foreground" />
+                                    <Phone className="h-4 w-4 text-orange-600" />
                                     <div>
                                         <p className="text-sm text-muted-foreground">Phone</p>
                                         <p className="font-medium">{employee.phoneNumber || "N/A"}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <CreditCard className="h-4 w-4 text-muted-foreground" />
+                                    <CreditCard className="h-4 w-4 text-orange-600" />
                                     <div>
                                         <p className="text-sm text-muted-foreground">ID Card Number</p>
                                         <p className="font-medium">{employee.idCardNumber}</p>
@@ -138,34 +111,34 @@ export default async function EmployeeDetailsPage({ params }: { params: { id: st
                         <Card>
                             <CardHeader>
                                 <CardTitle className="flex items-center gap-2">
-                                    <Building className="h-5 w-5" />
+                                    <Building className="h-5 w-5 text-orange-600" />
                                     Employment Details
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 <div className="flex items-center gap-3">
-                                    <User className="h-4 w-4 text-muted-foreground" />
+                                    <User className="h-4 w-4 text-orange-600" />
                                     <div>
                                         <p className="text-sm text-muted-foreground">Position</p>
                                         <p className="font-medium">{employee.position}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <Building className="h-4 w-4 text-muted-foreground" />
+                                    <Building className="h-4 w-4 text-orange-600" />
                                     <div>
                                         <p className="text-sm text-muted-foreground">Department</p>
                                         <p className="font-medium">{employee.department || "N/A"}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <DollarSign className="h-4 w-4 text-muted-foreground" />
+                                    <DollarSign className="h-4 w-4 text-orange-600" />
                                     <div>
                                         <p className="text-sm text-muted-foreground">Salary</p>
                                         <p className="font-medium">${employee.salary.toLocaleString()}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                                    <Calendar className="h-4 w-4 text-orange-600" />
                                     <div>
                                         <p className="text-sm text-muted-foreground">Hired Date</p>
                                         <p className="font-medium">{formatDate(employee.hiredAt)}</p>
@@ -204,6 +177,17 @@ export default async function EmployeeDetailsPage({ params }: { params: { id: st
                                 <p className="font-medium">{formatDate(employee.updatedAt)}</p>
                             </div>
                         </CardContent>
+                        <div className="flex justify-center pb-6">
+                            <Button
+                                asChild
+                                className="bg-orange-600 hover:bg-orange-700 text-white"
+                            >
+                                <Link href={`/employees/employee/${employee.id}/edit`}>
+                                    <Edit className="mr-2 h-4 w-4 text-white" />
+                                    Edit Employee
+                                </Link>
+                            </Button>
+                        </div>
                     </Card>
                 </div>
             </div>

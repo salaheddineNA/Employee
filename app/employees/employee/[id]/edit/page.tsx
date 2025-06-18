@@ -85,31 +85,12 @@ export default function EditEmployeePage({ params }: { params: { id: string } })
 
   return (
     <div className="flex flex-col">
-      <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-        <SidebarTrigger className="-ml-1" />
-        <div className="flex flex-1 items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="sm" asChild>
-              <Link href={`/employees/employee/${params.id}`}>
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Details
-              </Link>
-            </Button>
-            <div>
-              <h1 className="text-lg font-semibold">Edit Employee</h1>
-              <p className="text-sm text-muted-foreground">
-                {formData.firstName} {formData.lastName}
-              </p>
-            </div>
-          </div>
-        </div>
-      </header>
 
       <div className="flex-1 p-6">
-        <div className="max-w-2xl mx-auto">
+        <div >
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Personal Information */}
-            <Card>
+            <Card className="w-[100%] mx-auto border border-orange-500 bg-orange-50 shadow-md">
               <CardHeader>
                 <CardTitle>Personal Information</CardTitle>
                 <CardDescription>Basic employee details</CardDescription>
@@ -167,7 +148,7 @@ export default function EditEmployeePage({ params }: { params: { id: string } })
             </Card>
 
             {/* Employment Information */}
-            <Card>
+            <Card className="w-[100%] mx-auto border border-orange-500 bg-orange-50 shadow-md">
               <CardHeader>
                 <CardTitle>Employment Information</CardTitle>
                 <CardDescription>Job-related details</CardDescription>
@@ -233,7 +214,7 @@ export default function EditEmployeePage({ params }: { params: { id: string } })
             </Card>
 
             {/* Additional Information */}
-            <Card>
+            <Card className="w-[100%] mx-auto border border-orange-500 bg-orange-50 shadow-md">
               <CardHeader>
                 <CardTitle>Additional Information</CardTitle>
                 <CardDescription>Notes and comments</CardDescription>
@@ -257,9 +238,13 @@ export default function EditEmployeePage({ params }: { params: { id: string } })
               <Button type="button" variant="outline" asChild>
                 <Link href={`/employees/employee/${params.id}`}>Cancel</Link>
               </Button>
-              <Button type="submit" disabled={isLoading}>
+              <Button
+                type="submit"
+                disabled={isLoading}
+                className="bg-orange-600 hover:bg-orange-700 text-white"
+              >
                 {isLoading ? (
-                  <><LoaderPinwheel className="text-white animate-spin " /></>
+                  <LoaderPinwheel className="text-white animate-spin" />
                 ) : (
                   <>
                     <Save className="mr-2 h-4 w-4" />
